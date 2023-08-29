@@ -1,1 +1,4 @@
-// alert('js ')
+let fn = function(){
+  console.log();
+}
+fn()
