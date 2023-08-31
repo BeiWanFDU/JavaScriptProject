@@ -328,3 +328,22 @@ JavaScript内部提供的对象，包含各种属性和方法给开发者调用
 `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math#%E5%B1%9E%E6%80%A7`
 #### (3)内置对象-生成任意范围随机数
 ![](./images/QQ截图20230831194846.png)
+
+## 十二、一些扩展
+### 1、术语解释
+![](./images/QQ截图20230831204237.png)
+
+### 2、基本数据类型/引用数据类型
+![](./images/QQ截图20230831204350.png)   
+![](./images/QQ截图20230831204642.png)  
+```
+let num = 10
+let num2 = num
+num = 20
+console.log(num2)                               // 10
+
+let obj1 = {age: 18}
+let obj2 = obj1
+obj1.age = 20
+console.log(obj2)                               // 20
+```
