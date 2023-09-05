@@ -347,3 +347,255 @@ let obj2 = obj1
 obj1.age = 20
 console.log(obj2)                               // 20
 ```
+
+### 3、变量声明和const优先
+![](./images/QQ截图20230901133803.png)   
+![](./images/QQ截图20230901134348.png)  
+
+# WEB APIs
+## 一、Web API基本认知
+### 1、作用和分类
+![](./images/QQ截图20230901134348.png)
+
+### 2、DOM定义
+Document Object Model 文档对象模型
+![](./images/QQ截图20230901135108.png)
+
+### 3、DOM树
+![](./images/QQ截图20230901135459.png)
+
+### 4、DOM对象(重要)
+![](./images/QQ截图20230901140007.png)
+
+## 二、获取DOM对象
+### 1、根据CSS选择器来获取DOM元素(重点)
+#### (1)doucument.querySelector('CSS 选择器')
+![](./images/QQ截图20230901140652.png)
+#### (2)doucument.querySelectorALL('CSS 选择器')
+![](./images/QQ截图20230901140731.png)  
+![](./images/QQ截图20230901142152.png)
+
+### 2、其他获取DOM元素方法(了解)
+![](./images/QQ截图20230901142459.png)
+
+## 三、操作元素内容
+### 1、对象.innerText属性
+![](./images/QQ截图20230901150328.png)  
+```
+const box = document.querySelector('.box')
+console.log(box.innerText)                   
+box.innerText='<strong>我是一个盒子</strong>'
+console.log(box.innerText)         //显示<strong>我是一个盒子</strong>，innerText不解析标签
+```
+### 2、对象.innerHTML属性
+innerHTML与innerText属性基本相同，只是innerText会解析标签  
+![](./images/QQ截图20230901153346.png)
+```
+const box = document.querySelector('.box')
+console.log(box.innerTHTML)                   
+box.innerText='<strong>我是一个盒子</strong>'
+console.log(box.innerText)         //加粗显示'我是一个盒子'，innerHTML解析标签
+```
+
+## 四、操作元素属性
+### 1、操作元素常用属性
+![](./images/QQ截图20230901155437.png)
+```
+<img src="../JS笔记/images/QQ截图20230824180333.png" alt="">
+
+<script>
+  const img = document.querySelector('img')
+  img.src='../JS笔记/images/QQ截图20230824180618.png'
+  img.title='qq截图'
+</script>
+```
+
+### 2、操作元素样式属性
+![](./images/QQ截图20230901160825.png)
+#### (1)通过style属性操作CSS
+![](./images/QQ截图20230901162557.png)  
+document.body可以直接获得，不需要使用querySelector方法
+```
+<div class="box"></div>
+<script>
+  const box = document.querySelector('.box')
+  box.style.width = '400px'
+  // 多组单词的采取小驼峰命名法，background-color中的-会被解析成减号从而报错
+  // box.style.background-color='blue'，会报错
+  box.style.backgroundColor='blue'
+</script>
+```
+
+#### (2)通过操作类名(className)操作CSS
+使用className可以同时修改多个样式，但是，直接使用className赋值会覆盖以前的类名  
+如果需要保留多个属性，在赋值时需要加上多个类名
+![](./images/QQ截图20230901163710.png)  
+```
+<style>
+  div {
+    width: 200px;
+    height: 200px;
+  }
+
+  .one {
+    background-color: blue;
+  }
+
+  .two {
+    border: 2px solid black;
+  }
+</style>
+
+<body>
+  <div>111</div>
+  <div class="one two"></div>
+  <script>
+    const div = document.querySelector('div')
+    div.className = 'one'            //div会添加类名，相当于变成<div class="one"></div>
+    div.className = 'two'            //会覆盖原来的类名，相当于变成<div class="one"></div>,会覆盖原来所有的类名
+    div.className = 'one two'        //标签<div class="one two"></div>
+  </script>
+</body>
+```
+#### (3)通过classList操作类控制CSS
+`div.classList.add('one')`此时类名不用加点，因为classList追踪的对象只能是类名
+![](./images/QQ截图20230901170007.png)  
+toggle()切换类，有就删掉，没有就加上  
+`box.calssList.toggle('active)`
+#### (4)className和classList的区别
+![](./images/QQ截图20230901171859.png)  
+
+### 3、操作表单元素属性
+表单的值由`表单.value`得到，而非`表单.innerHTML`
+![](./images/QQ截图20230904182132.png)  
+![](./images/QQ截图20230904182849.png)  
+![](./images/QQ截图20230904183452.png)  
+
+
+```
+<button>按钮</button>
+<input type="checkbox">
+
+<script>
+  const bt = document.querySelector('button')
+  bt.disabled = true
+  const ipt = document.querySelector('input')
+  ipt.checked = true
+</script>
+```
+
+### 4、自定义属性
+![](./images/QQ截图20230904202707.png)
+
+## 五、定时器-间歇函数
+### 1、定时器函数介绍
+![](./images/QQ截图20230904203603.png)
+
+### 2、定时器函数基本使用
+`setInterval(函数,间隔时间)    //函数名不需要加小括号`
+#### (1)开启定时器
+![](./images/QQ截图20230904205945.png)
+#### (2)关闭定时器
+![](./images/QQ截图20230904210204.png)
+#### (3)实例代码
+```
+const btn = document.querySelector('.btn')
+    let i = 5
+    const n = setInterval(function () {
+        i--
+        btn.innerHTML = `我已经阅读用户协议(${i})`
+        if (i === 0) {
+            clearInterval(n)
+            btn.disabled = false
+            btn.innerHTML = '同意'
+        }
+    }, 1000)
+```
+
+## 六、事件监听
+### 1、定义
+![](./images/QQ截图20230905142320.png)  
+
+### 2、语法
+![](./images/QQ截图20230905142748.png)  
+![](./images/QQ截图20230905142826.png)  
+ 
+```
+// 点击关闭
+const box1 = document.querySelector('.box1')
+const box = document.querySelector('.box')
+
+box1.addEventListener('click',function(){
+  box.style.display = 'none'
+})
+```
+
+### 3、事件监听版本(了解)
+![](./images/QQ截图20230905154411.png)  
+![](./images/QQ截图20230905154701.png)  
+
+### 4、事件类型
+![](./images/QQ截图20230905155009.png)
+#### (1)鼠标触发
+#### (2)焦点事件
+```
+const input = document.querySelector('input')
+input.addEventListener('focus',function(){
+  console.log('有焦点');
+})
+input.addEventListener('blur',function(){
+  console.log('失去焦点');
+})
+```
+#### (3)键盘事件
+```
+// 键盘上按下任意键则会触发keydown事件，抬起键盘则会触发keyup时间 
+const input = document.querySelector('input')
+input.addEventListener('keydown',function(){
+  console.log('keydown');
+})
+
+input.addEventListener('keyup',function(){
+  console.log('keyup');
+})
+```
+
+#### (4)用户输入
+```
+const input = document.querySelector('input')
+input.addEventListener('input',function(){
+  console.log(input.value);                         //用户的输入通过input.value得到，类型为字符串，可以通过length属性得到
+})
+```
+
+### 5、时间监听的调用
+```
+next.addEventListener('click', function () {
+  i = (i + 1) % sliderData.length
+  toggle()
+})
+
+next.click()   //相当于触发了一次click事件
+```
+
+## 七、时间对象
+### 1、定义及使用场景
+![](./images/QQ截图20230905173648.png)  
+### 2、语法
+![](./images/QQ截图20230905173946.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
