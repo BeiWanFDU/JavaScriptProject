@@ -10,14 +10,21 @@
 
 <body>
   <input type="text">
-
   <script>
     const input = document.querySelector('input')
-    input.addEventListener('input',function(){
-      console.log(input.value);
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Enter') {
+        if (tx.value.trim() !== '') {
+          item.style.display = 'block'
+          text.innerHTML = tx.value
+        }
+        tx.value = ''
+      }
+      console.log('press enter');
     })
 
-    
+
+
   </script>
 </body>
 

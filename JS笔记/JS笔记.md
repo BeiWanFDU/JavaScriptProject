@@ -98,6 +98,13 @@ document.write('I am ' + age +' years old')
 #### (3)模板字符串
 ![](./images/QQ截图20230827150013.png)
 
+#### (4)trim()方法
+字符串的trim方法可以去除字符串左右两侧的空格，字符串中间的空格被保存  
+```
+const str = '     pink   '
+console.log(str.trim())       //输出pink，两侧的空格被去除
+```
+
 ### 3、布尔类型boolen
 ![](./images/QQ截图20230827150618.png)
 
@@ -355,7 +362,7 @@ console.log(obj2)                               // 20
 # WEB APIs
 ## 一、Web API基本认知
 ### 1、作用和分类
-![](./images/QQ截图20230901134348.png)
+![](./images/QQ截图20230901134943.png)
 
 ### 2、DOM定义
 Document Object Model 文档对象模型
@@ -461,7 +468,7 @@ document.body可以直接获得，不需要使用querySelector方法
 `div.classList.add('one')`此时类名不用加点，因为classList追踪的对象只能是类名
 ![](./images/QQ截图20230901170007.png)  
 toggle()切换类，有就删掉，没有就加上  
-`box.calssList.toggle('active)`
+`box.calssList.toggle('active')`
 #### (4)className和classList的区别
 ![](./images/QQ截图20230901171859.png)  
 
@@ -549,7 +556,7 @@ input.addEventListener('blur',function(){
 ```
 #### (3)键盘事件
 ```
-// 键盘上按下任意键则会触发keydown事件，抬起键盘则会触发keyup时间 
+// 键盘上按下任意键则会触发keydown事件，抬起键盘则会触发keyup事件 
 const input = document.querySelector('input')
 input.addEventListener('keydown',function(){
   console.log('keydown');
@@ -568,7 +575,7 @@ input.addEventListener('input',function(){
 })
 ```
 
-### 5、时间监听的调用
+### 5、事件监听的调用
 ```
 next.addEventListener('click', function () {
   i = (i + 1) % sliderData.length
@@ -578,11 +585,23 @@ next.addEventListener('click', function () {
 next.click()   //相当于触发了一次click事件
 ```
 
-## 七、时间对象
+## 七、事件对象
 ### 1、定义及使用场景
 ![](./images/QQ截图20230905173648.png)  
 ### 2、语法
 ![](./images/QQ截图20230905173946.png)
+
+### 3、事件对象的常用属性
+
+#### ()示例代码
+```
+const input = document.querySelector('input')
+input.addEventListener('keyup',function(e){
+  if(e.key === 'Enter')
+  console.log('press enter');
+})
+```
+
 
 
 
