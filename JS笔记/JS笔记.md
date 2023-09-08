@@ -492,6 +492,9 @@ toggle()切换类，有就删掉，没有就加上
 ```
 
 ### 4、自定义属性
+`let i = +e.target.dataset.id                     //此时id为字符串，隐式转换`  
+`document.querySelector('[data-name="new"]')      //属性选择器，属性名的引号可以省略`  
+`document.querySelector('[data-name=new]')        //属性选择器，属性名的引号可以省略`  
 ![](./images/QQ截图20230904202707.png)
 
 ## 五、定时器-间歇函数
@@ -585,32 +588,223 @@ next.addEventListener('click', function () {
 next.click()   //相当于触发了一次click事件
 ```
 
-## 七、事件对象
-### 1、定义及使用场景
+## 七、事件对象、环境对象及回调函数
+### 1、事件对象
+#### (1)定义及使用场景
 ![](./images/QQ截图20230905173648.png)  
-### 2、语法
+
+#### (2)语法
 ![](./images/QQ截图20230905173946.png)
 
-### 3、事件对象的常用属性
-
-#### ()示例代码
+#### (3)事件对象的常用属性
+![](./images/QQ截图20230906132320.png)  
+![](./images/QQ截图20230906133451.png) ( )
+#### (4)示例代码
 ```
 const input = document.querySelector('input')
-input.addEventListener('keyup',function(e){
+input.addEventListener('keyup',function(e){        //事件绑定的回调函数的第一个参数，e就是事件对象
   if(e.key === 'Enter')
   console.log('press enter');
 })
 ```
 
+### 2、环境对象
+#### (1)定义
+![](./images/QQ截图20230906134010.png)
 
+#### (2)指代规则(粗略)
+```
+const btn = document.querySelector('button')
+btn.addEventListener('click', function () {
+  console.log(this);                         //此时，this指向button对象
+  this.style.color = 'red'                  
+})
+function fn(){
+  console.log(this);                         //此时，this指向windows
+}
+fn()
+```
 
+### 3、回调函数
+![](./images/QQ截图20230906144133.png)
 
+## 八、DOM事件
+### 1、事件流
+#### (1)事件流的两个阶段说明
+![](./images/QQ截图20230907165053.png)
 
+#### (2)事件捕获(了解)
+![](./images/QQ截图20230907165408.png)
+```
+//DOM.addEventListener(事件类型,事件处理函数,是否使用捕获机制)，第三个参数为true代表使用事件捕获
+//事件捕获代表事件从外到里执行，分别alert document fa son
+document.addEventListener('click', function () {
+  alert('document')
+}, true)
+fa.addEventListener('click', function () {
+  alert('fa')
+}, true)
+son.addEventListener('click', function () {
+  alert('son')
+}, true)
+```
 
+#### (3)事件冒泡
+mouseenter和mouseleave没有事件冒泡
+![](./images/QQ截图20230907171702.png)
+```
+//DOM.addEventListener(事件类型,事件处理函数,是否使用捕获机制)，默认为冒泡
+//事件冒泡代表事件从里到外执行，分别alert son fa document  
+document.addEventListener('click', function () {
+  alert('document')
+})
+fa.addEventListener('click', function () {
+  alert('fa')
+})
+son.addEventListener('click', function () {
+  alert('son')
+})
+```
 
+#### (4)阻止冒泡(阻止事件传播)
+![](./images/QQ截图20230907172010.png)  
+```
+// e.stopPropagation()会阻止事件传播，只会alert son
+document.addEventListener('click', function () {
+  alert('document')
+})
+fa.addEventListener('click', function () {
+  alert('fa')
+})
+son.addEventListener('click', function (e) {
+  alert('son')
+  e.stopPropagation()
+})
+```
+### (5)阻止元素默认行为
+![](./images/QQ截图20230908132709.png)
+```
+<a href="http://www.baidu.com">百度一下</a>
+const a = document.querySelector('a')
+a.addEventListener('click', function (e) {
+  e.preventDefault()
+})
+```
 
+#### (6)解绑事件
+![](./images/QQ截图20230907172546.png)  
+```
+const btn = document.querySelector('button')
+function fn() {
+  alert('点击了')
+}
+btn.addEventListener('click', fn)
+btn.removeEventListener('click', fn)           // 事件解绑
+```
 
+#### (7)传统on注册和事件监听注册的区别
+![](./images/QQ截图20230907173310.png)
 
+### 2、事件委托
+#### (1)引入
+![](./images/QQ截图20230907173648.png)
+
+#### (2)原理及实现
+![](./images/QQ截图20230907174904.png)
+![](./images/QQ截图20230907175127.png)
+
+#### (3)示例代码
+```
+<ul>
+  <li>第1个孩子</li>
+  <li>第2个孩子</li>
+  <li>第3个孩子</li>
+  <li>第4个孩子</li>
+  <li>第5个孩子</li>
+  <p>我不需要变色</p>
+</ul>
+<script>
+  // 点击每个小li 当前li 文字变为红色
+  // 按照事件委托的方式  委托给父级，事件写到父级身上
+  // 1. 获得父元素
+  const ul = document.querySelector('ul')
+  ul.addEventListener('click', function (e) {
+    this.style.color = 'red'         //这会导致所有的li都变为红色
+    console.dir(e.target)            //就是我们点击的那个对象，使用的是dir而非log，他俩的区别在下面
+    e.target.style.color = 'red'
+   
+    if (e.target.tagName === 'LI') {    //只要点击li才会有效果,点击p则不会变红
+      e.target.style.color = 'red'
+    }
+  })
+```
+
+#### (4)dir与log的区别
+`log`语句打印的是结果，直接显示信息；  
+`dir`语句打印的是内容，对显示对象的所有属性和方法。  
+这样的区别在输出普通数据时没有区别，打印的内容完全一样，在打印对象时就有区别了。  
+`console.log()`输出的是对象源代码，
+`console.dir()`则输出该对象的内容，所有属性和方法。
+
+### 3、其他事件
+### (1)页面加载事件
+![](./images/QQ截图20230908133745.png)  
+```
+// 等待页面所有资源加载完毕，就回去执行回调函数
+window.addEventListener('load', function () {
+  const btn = document.querySelector('button')
+  btn.addEventListener('click', function () {
+    alert(11)
+  })
+})
+
+// 等待图片加载完毕，再去执行里面的代码
+img.addEventListener('load', function () {
+  //要执行的代码
+})
+```
+![](./images/QQ截图20230908134051.png)
+![](./images/QQ截图20230908134424.png)
+
+### (2)元素滚动事件
+```
+/* 页面滑动 */
+html {
+  /* 让滚动条丝滑的滚动,不会突兀地跳转 */
+  scroll-behavior: smooth;
+}
+```
+![](./images/QQ截图20230908134806.png)   
+`scrollTop`和`scrollLeft`是可读写的，返回的数据是数字型的  
+![](./images/QQ截图20230908140406.png)  
+![](./images/QQ截图20230908135804.png)  
+`document.documentElement`是针对整个窗口滚动距离的固定写法，对于某个具体的盒子，可直接写为`DOM.scrollTop`，除此之外，还可以使用`scrollTo(横坐标,纵坐标)`方法使得内容滚动到指定的坐标，与使用`scrollTop`和`scrollLeft`属性来改变位置可以得到相同的效果    
+```
+window.addEventListener('scroll', function () {
+  console.log('我滚了')
+  // 我想知道页面到底滚动了多少像素， 被卷去了多少scrollTop
+  // 获取html元素写法  
+  document.documentElement  
+  console.log(document.documentElement.scrollTop)
+  const n = document.documentElement.scrollTop
+})
+```
+### (3)页面尺寸事件
+![](./images/QQ截图20230908143238.png)  
+![](./images/QQ截图20230908143659.png)
+
+### 4、元素尺寸与位置
+#### (1)元素尺寸
+`offsetWidth,offsetHeight`与`clientWidth,clientHeight`的区别就=在于是否包含边框的宽度
+![](./images/QQ截图20230908144145.png)  
+#### (2)元素位置
+`offsetLeft`和`offsetTop`是距离自己有定位的父级元素的距离，若父级元素没有被定位，则向更高一级的父元素寻找  
+![](./images/QQ截图20230908144313.png)   
+相对于视口的位置，如果发生滚动，盒子的位置发生改变    
+![](./images/QQ截图20230908162401.png)
+
+### 5、总结
+![](./images/QQ截图20230908162728.png)  
 
 
 
