@@ -7,16 +7,30 @@
   <title>demo</title>
 </head>
 <style>
-  
+  div{
+    width: 300px;
+    height: 300px;
+    background-color: pink;
+  }
 </style>
 
 <body>
-  
+  <div>
 
+  </div>
   <script>
-    window.addEventListener('resize',function(){
-      console.log(document.documentElement.clientWidth)
+    const div = document.querySelector('div')
+    div.addEventListener('touchstart',function(){
+      console.log('start');
     })
+    div.addEventListener('touchend',function(){ 
+      console.log('end');
+    })
+    div.addEventListener('touchmove',function(){
+      console.log('move');
+    })
+   
+   
 
   </script>
 </body>

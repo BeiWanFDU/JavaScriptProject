@@ -588,6 +588,21 @@ next.addEventListener('click', function () {
 next.click()   //相当于触发了一次click事件
 ```
 
+### 6、M端事件(了解)
+![](./images/QQ截图20230911152743.png)  
+```
+const div = document.querySelector('div')
+div.addEventListener('touchstart',function(){
+  console.log('start');
+})
+div.addEventListener('touchend',function(){ 
+  console.log('end');
+})
+div.addEventListener('touchmove',function(){
+  console.log('move');
+})
+```
+
 ## 七、事件对象、环境对象及回调函数
 ### 1、事件对象
 #### (1)定义及使用场景
@@ -806,9 +821,102 @@ window.addEventListener('scroll', function () {
 ### 5、总结
 ![](./images/QQ截图20230908162728.png)  
 
+## 九、日期对象
+### (1)实例化
+![](./images/QQ截图20230909144716.png)
+```
+// 得到当前时间
+const date = new Date()
+console.log(date);
+
+// 指定时间
+const date1 = new Date('2022-5-6')
+console.log(date1);
+```
+
+
+### (2)日期对象方法
+![](./images/QQ截图20230909144837.png)  
+```
+const date = new Date()
+console.log(date.getFullYear())    // 得到年份
+console.log(date.getMonth()+1)     // 获得月份，注意要加1
+console.log(date.getDate())        // 获取月份中的某一天
+console.log(date.getDay())         // 周日的取值为0，取值为0~9
+console.log(date.toLocaleString()) // 返回2023/9/9 14:59:40这种格式的时间 
+console.log(date.toLocaleDateString())   //返回2023/9/9
+console.log(date.toLocaleTimeString())   //返回14:59:40
+```
+
+### (3)时间戳
+#### 定义
+![](./images/QQ截图20230909150611.png)  
+#### 语法
+![](./images/QQ截图20230909150944.png)  
+`new Date()`返回的字符串通过隐式转换转换为时间戳
+```
+console.log(+new Date())                          // 获取当前时间的时间戳
+console.log(+new Date('2022-4-1 18:30:00'))       // 获取指定时间的时间戳
+```
+
+## 十、节点操作
+### 1、DOM节点
+![](./images/QQ截图20230909171637.png)
+
+### 2、查找节点
+![](./images/QQ截图20230909171839.png)
+#### (1)父节点查找
+![](./images/QQ截图20230911142931.png)
+#### (2)子节点查找
+![](./images/QQ截图20230911143357.png)
+#### (3)兄弟节点查找
+![](./images/QQ截图20230911143926.png)
+
+### 3、增加节点
+![](./images/QQ截图20230911144326.png)  
+#### (1)创建节点
+![](./images/QQ截图20230911144828.png)
+#### (2)追加节点
+![](./images/QQ截图20230911144750.png)
+```
+// append插入最后一个位置
+const div =document.createElement('div')
+document.body.append(div)
+
+// 插入某个元素前面
+const ul = document.querySelector('ul')
+const li =document.createElement('li')
+li.innerHTML='I am li'
+ul.insertBefore(li,ul.children[0])
+```
+#### (3)克隆节点
+布尔值选择false，则只会克隆标签，不会克隆后代节点，也不会克隆其内容  
+![](./images/QQ截图20230911151136.png)
+```
+// 先克隆，再追加
+const ul = document.querySelector('ul')
+const li1 = ul.children[0].cloneNode(true)
+ul.append(li1)
+```
+### 4、删除节点
+![](./images/QQ截图20230911152444.png)  
+
+
+### 5、swiper插件
+![](./images/QQ截图20230911153348.png)
+`https://www.bilibili.com/video/BV1Y84y1L7Nn?t=1822.0&p=124`
+
+## 十一、Window对象
+### 1、BOM(浏览器对象模型)
+![](./images/QQ截图20230911200955.png)
+
+### 2、定时器-延时函数
 
 
 
 
 
-
+### 3、JS执行机制
+### 4、location对象
+### 5、navigator对象
+### 6、history对象
