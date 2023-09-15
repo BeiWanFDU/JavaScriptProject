@@ -4,33 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>demo</title>
+  <title>demo</title>  
+  <style>
+
+  </style>
 </head>
-<style>
-  div{
-    width: 300px;
-    height: 300px;
-    background-color: pink;
-  }
-</style>
+
 
 <body>
-  <div>
+  
 
-  </div>
+
+
   <script>
-    const div = document.querySelector('div')
-    div.addEventListener('touchstart',function(){
-      console.log('start');
-    })
-    div.addEventListener('touchend',function(){ 
-      console.log('end');
-    })
-    div.addEventListener('touchmove',function(){
-      console.log('move');
-    })
-   
-   
+    const str = '正在学习前端'
+    // 定义规则
+    const reg = /前端/
+    // 是否匹配
+    console.log(reg.test(str))
+    console.log(/前端/.test('正在学习前端'))
+
+    console.log(/^哈/.test('哈'))          //true
+    console.log(/^哈/.test('二哈'))        //false
+    console.log('------------------------------');
+    console.log(/^哈*$/.test(''))        //true 只有这种情况为true
+    console.log(/^哈*$/.test('哈哈'))        //false 精确匹配，只能有一个‘哈’
+
+    console.log(/^哈*$/.test('哈哈哈哈哈哈哈'))   // true
+    console.log(/^哈*$/.test('二哈哈哈哈哈'))     // false
+
+
+    
+
+
+
 
   </script>
 </body>

@@ -35,8 +35,11 @@ alert('help')
 console.log('console print')
 ```
 #### (2)输入语法
+##### promp
 ![](./images/QQ截图20230825151754.png)
 `prompt('input your name')`
+##### confirm
+`if (confirm('你确定要执行此次操作么?'))`，confirm会跳出弹框，根据用户的选择返回true or false  
 
 ### 7、代码执行循序
 按照HTML文档流执行JS代码  
@@ -266,10 +269,10 @@ fn()
 无需调用，直接执行,多个立即执行函数直接必须使用分号隔开  
 ![](./images/QQ截图20230831141625.png)
 ```
-// 语法1
-(function (){})()
-// 语法2
-(function(){}())
+立即执行函数的几种写法
+(function(){}());
+(function(){})();
+!function(){}();
 ```
 ![](./images/QQ截图20230831142433.png)
 
@@ -911,12 +914,218 @@ ul.append(li1)
 ![](./images/QQ截图20230911200955.png)
 
 ### 2、定时器-延时函数
-
-
-
-
+#### (1)语法
+![](./images/QQ截图20230913134837.png)
+#### (2)与间歇函数的区别
+![](./images/QQ截图20230913135009.png)
 
 ### 3、JS执行机制
+#### (1)单线程
+![](./images/QQ截图20230913135203.png)
+#### (2)同步和异步
+![](./images/QQ截图20230913135339.png)  
+![](./images/QQ截图20230913135424.png)
+#### (3)同步任务和异步任务的执行机制
+![](./images/QQ截图20230913135615.png)
+![](./images/QQ截图20230913140045.png)
+
 ### 4、location对象
+#### (1)location.href属性
+获取完整的url地址，对其赋值网页会直接跳转，不需使用a标签的点击  
+![](./images/QQ截图20230913141624.png)
+#### (2)location.search属性
+![](./images/QQ截图20230913153256.png)
+#### (3)location.hash属性
+hash属性获取地址中的哈希值，符号#后面部分  
+![](./images/QQ截图20230913153843.png)  
+`https://music.163.com/#/friend`  
+`https://music.163.com/#/my/`  
+`https://music.163.com/#/download`  
+#### (4)location.reload()方法
+![](./images/QQ截图20230913154013.png)  
+```
+location.reload()
+location.reload(true)
+```
 ### 5、navigator对象
+![](./images/QQ截图20230913155208.png)  
+
 ### 6、history对象
+![](./images/QQ截图20230913155849.png)
+
+## 十二、本地存储
+### 1、本地存储介绍
+![](./images/QQ截图20230913161710.png)  
+
+### 2、本地存储分类
+#### (1)localStorage 
+##### 作用及特性
+本地存储只能存储字符串型数据，即使是数字型数据也会修改为字符串型   
+![](./images/QQ截图20230913161805.png)  
+##### 存
+`localStorage.setItem('uname','pink')`  
+![](./images/QQ截图20230913162234.png)
+##### 取
+`console.log(localStorage.getItem('uname'))`  
+##### 删
+`localStorage.removeItem('uname')`
+##### 改
+`localStorage.setItem('uname','red')           // 有则改，无则增`  
+
+#### (2)session-Storage
+#### 特性
+![](./images/QQ截图20230913163510.png)  
+
+### 3、存储复杂数据类型
+#### (1)无法直接存储复杂数据类型
+![](./images/QQ截图20230913164015.png)
+#### (2)解决方案 
+![](./images/QQ截图20230913165627.png)
+![](./images/QQ截图20230913165443.png)  
+`const arr = JSON.parse(localStorage.getItem('data')) || []`，若localStorage为空，则使数组为空，这种写法利用了逻辑中断，简化了代码量  
+```
+const obj = {
+  uname: 'pink',
+  age: 18
+}
+// JSON对象，属性和值都有统一有双引号
+localStorage.setItem('obj',JSON.stringify(obj))
+//得到JSON类型字符串{"uname":"pink","age":18}
+console.log(localStorage.getItem('obj'))      
+// 将JSON字符串转换为对象 
+console.log(JSON.parse(localStorage.getItem('obj')))      
+```
+
+### 4、利用map()和join()数组方法实现字符串拼接
+#### (1)map()
+![](./images/QQ截图20230913171727.png)  
+```
+const arr = ['red', 'blue', 'pink']
+const newArr = arr.map(function (ele, index) {
+  console.log(ele)
+  console.log(index)
+  return ele + 'color'
+})
+
+console.log(arr)
+console.log(newArr)
+```
+#### (2)join()
+小括号为空，则元素之间无分割，无参数则默认用逗号分隔  
+![](./images/QQ截图20230914145623.png)
+
+#### (3)数组中map()和join()方法渲染页面思路
+![](./images/QQ截图20230914150213.png)  
+```
+function render() {
+  // (1)利用map遍历数组，返回对应tr的数组
+  const trArr = arr.map(function (ele, index) {
+    return `<tr>
+              <td>${ele.stuId}</td>
+              <td>${ele.uname}</td>
+              <td>${ele.age}</td>
+              <td>${ele.stuId}</td>
+              <td>${ele.salary}</td>
+              <td>${ele.city}</td>
+              <td>
+                <a href="javascript:" data-ID='${index}'>删除</a>
+              </td>
+            </tr> 
+            `
+  })
+  // (2)把数组转换为字符串join()
+  // (3)把生成的字符串追加给tbody
+  tbody.innerHTML = trArr.join('')
+}
+```
+
+## 十三、正则表达式
+### 1、介绍
+#### (1)定义
+![](./images/QQ截图20230914181812.png)
+#### (2)使用场景
+![](./images/QQ截图20230914181854.png)  
+
+### 2、语法
+![](./images/QQ截图20230914182311.png)  
+#### (1)定义规则
+![](./images/QQ截图20230914182541.png)  
+#### (2)匹配
+![](./images/QQ截图20230914182819.png)  
+```
+const str = '正在学习前端'
+// 定义规则
+const reg = /前端/
+// 是否匹配
+console.log(reg.test(str))
+// 简便写法
+console.log(/前端/.test('正在学习前端'))
+```
+#### (3)exec()
+![](./images/QQ截图20230914183032.png)  
+
+### 3、元字符
+#### (1)定义
+![](./images/QQ截图20230914183527.png)  
+#### (2)边界符
+![](./images/QQ截图20230914184540.png)  
+```
+console.log(/^哈/.test('哈'))           //true
+console.log(/^哈/.test('二哈'))         //false
+console.log(/^哈$/.test('哈'))          //true 只有这种情况为true
+console.log(/^哈$/.test('哈哈'))        //false 精确匹配，只能有一个‘哈’
+``` 
+![](./images/QQ截图20230914191844.png)  
+
+#### (3)量词(表示重复次数)
+![](./images/QQ截图20230914200055.png)  
+![](./images/QQ截图20230914200120.png)  
+
+
+#### (4)[]匹配字符集合
+![](./images/QQ截图20230915141339.png)  
+![](./images/QQ截图20230915141929.png)  
+![](./images/QQ截图20230915142004.png)  
+![](./images/QQ截图20230915142102.png)  
+.匹配换行符之外的任何单个字符
+
+#### (5)预定义
+![](./images/QQ截图20230915153748.png)  
+
+### 4、修饰符
+![](./images/QQ截图20230915153952.png)  
+```
+console.log(/^java$/.test('java'))
+console.log(/^java$/i.test('JAVA'))
+console.log(/^java$/i.test('Java'))
+const str = 'java是一门编程语言， 学完JAVA工资很高'
+// const re = str.replace(/java|JAVA/g, '前端')
+const re = str.replace(/java/ig, '前端')
+console.log(re)  // 前端是一门编程语言， 学完前端工资很高
+```
+```
+<textarea name="" id="" cols="30" rows="10"></textarea>
+<button>发布</button>
+<div></div>
+<script>
+  const tx = document.querySelector('textarea')
+  const btn = document.querySelector('button')
+  const div = document.querySelector('div')
+  btn.addEventListener('click', function () {
+    // console.log(tx.value)
+    div.innerHTML = tx.value.replace(/激情|基情/g, '**')
+    tx.value = ''
+  })
+</script>
+```
+
+# JS进阶
+
+
+
+
+
+
+
+
+
