@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>demo</title>  
+  <title>demo</title>
   <style>
 
   </style>
@@ -12,29 +12,35 @@
 
 
 <body>
-  
-
-
-
   <script>
-    const str = '正在学习前端'
-    // 定义规则
-    const reg = /前端/
-    // 是否匹配
-    console.log(reg.test(str))
-    console.log(/前端/.test('正在学习前端'))
+    // 1、箭头函数基本语法
+    const fn1 = function () {
+      console.log(123)
+    }
+    const fn2 = () => {
+      console.log(123)
+    }
+    fn1()
+    fn2()
 
-    console.log(/^哈/.test('哈'))          //true
-    console.log(/^哈/.test('二哈'))        //false
-    console.log('------------------------------');
-    console.log(/^哈*$/.test(''))        //true 只有这种情况为true
-    console.log(/^哈*$/.test('哈哈'))        //false 精确匹配，只能有一个‘哈’
+    // 2、只有一个形参的时候可以省略小括号
+    const fn3 = a => {
+      console.log(a)
+    }
+    fn3(1)
+    // 3、只有一行代码时可以省略大括号
+    const fn4 = a => console.log(1)
+    fn4(1)
+    // 4、只有一行代码时可以省略return，直接返回值
+    const fn5 = x => x + x
+    console.log(fn5(1))
+    // 更简洁的语法
+    const form = document.querySelector('form')
+    form.addEventListener('click', ev => ev.preventDefault())    // ev是事件对象
+    // 5、箭头函数可以直接返回一个对象,对象的大括号会和函数的大括号冲突，可以将函数的大括号换成小括号
+    const fn = (uname) => ({ uname: uname })
+    console.log(fn('kang'))
 
-    console.log(/^哈*$/.test('哈哈哈哈哈哈哈'))   // true
-    console.log(/^哈*$/.test('二哈哈哈哈哈'))     // false
-
-
-    
 
 
 
